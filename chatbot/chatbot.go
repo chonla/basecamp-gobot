@@ -32,9 +32,8 @@ func (b *Chatbot) Start() {
 			return err
 		}
 
-		r := new(models.MessageResponse)
-		r.Content = fmt.Sprintf("พูดอะไรนะ %s", m.Command)
-		return c.JSON(http.StatusOK, r)
+		response := fmt.Sprintf("พูดอะไรนะ <b>%s</b>", m.Command)
+		return c.String(http.StatusOK, response)
 	})
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", b.Port)))
 }
