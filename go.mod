@@ -1,4 +1,4 @@
-module github.com/chonla/basecamp-gobot
+module gobot
 
 go 1.15
 
