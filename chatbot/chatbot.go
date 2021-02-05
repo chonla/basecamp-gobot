@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // Chatbot struct
@@ -19,6 +19,7 @@ func New(port string) *Chatbot {
 	}
 }
 
+// Start the server
 func (b *Chatbot) Start() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
