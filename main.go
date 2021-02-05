@@ -14,5 +14,5 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	listeningPort := os.Getenv("PORT")
-	e.Logger.Fatal(e.Start(fmt.Sprint(":%s", listeningPort)))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", listeningPort)))
 }
