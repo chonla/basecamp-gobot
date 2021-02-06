@@ -1,6 +1,7 @@
 package chatbot
 
 import (
+	"database/sql"
 	"fmt"
 	"gobot/models"
 	"net/http"
@@ -8,7 +9,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/color"
-	"github.com/lib/pq"
+	_ "github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -56,7 +57,7 @@ func (b *Chatbot) Start() {
 
 func (b *Chatbot) migrateDB() {
 	databaseURL := os.Getenv("DATABASE_URL")
-	db, err := gorm.Open(pq.Open(databaseURL), &gorm.Config{})
+	db, err := gorm.Open(sql.Open("postgres", databaseURL), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
