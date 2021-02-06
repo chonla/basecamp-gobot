@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"gobot/models"
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/color"
+	"github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 const defaultPort = "8080"
@@ -44,7 +47,21 @@ func (b *Chatbot) Start() {
 
 	b.showBanner()
 	e.HideBanner = true
+
+	e.Logger.Info("Migrating database if needs ...")
+	b.migrateDB()
+
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", b.Port)))
+}
+
+func (b *Chatbot) migrateDB() {
+	databaseURL := os.Getenv("DATABASE_URL")
+	db, err := gorm.Open(pq.Open(databaseURL), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	db.AutoMigrate(&models.Phonebook{})
 }
 
 func (b *Chatbot) showBanner() {
